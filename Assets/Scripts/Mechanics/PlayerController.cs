@@ -15,6 +15,7 @@ namespace Platformer.Mechanics
     public class PlayerController : KinematicObject
     {
         public AudioClip jumpAudio;
+        public GameObject victoryScreen;
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
 
@@ -50,6 +51,9 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+        }
+        public void PlayerVictory () {
+            victoryScreen.SetActive(true);
         }
         public void MoveLeft () {
             if (controlEnabled)

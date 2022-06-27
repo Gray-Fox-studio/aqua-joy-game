@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Platformer.Mechanics
@@ -13,6 +14,13 @@ namespace Platformer.Mechanics
     {
         [Tooltip("Frames per second at which tokens are animated.")]
         public float frameRate = 12;
+        public float tokenCount = 0;
+        public float tokensTotal = 0;
+        public GameObject star1;
+        public GameObject star2;
+        public GameObject star3;
+        public TextMeshProUGUI textCounter;
+        public AudioSource collectableSFX;
         [Tooltip("Instances of tokens which are animated. If empty, token instances are found and loaded at runtime.")]
         public TokenInstance[] tokens;
 
@@ -22,6 +30,7 @@ namespace Platformer.Mechanics
         void FindAllTokensInScene()
         {
             tokens = UnityEngine.Object.FindObjectsOfType<TokenInstance>();
+            tokensTotal = tokens.Length;
         }
 
         void Awake()
@@ -40,6 +49,15 @@ namespace Platformer.Mechanics
 
         void Update()
         {
+            if (tokenCount >= (tokensTotal / 3)) {
+                star1.SetActive(true);
+            }
+            if (tokenCount >= ((tokensTotal / 3) * 2)) {
+                star2.SetActive(true);
+            }
+            if (tokenCount >= tokensTotal) {
+                star3.SetActive(true);
+            }
             //if it's time for the next frame...
             if (Time.time - nextFrameTime > (1f / frameRate))
             {
@@ -55,6 +73,9 @@ namespace Platformer.Mechanics
                         {
                             token.gameObject.SetActive(false);
                             tokens[i] = null;
+                            tokenCount++;
+                            textCounter.text = tokenCount + "";
+                            collectableSFX.Play();
                         }
                         else
                         {

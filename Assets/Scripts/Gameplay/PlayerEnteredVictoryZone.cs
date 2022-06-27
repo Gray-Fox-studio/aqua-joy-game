@@ -19,6 +19,9 @@ namespace Platformer.Gameplay
         {
             model.player.animator.SetTrigger("victory");
             model.player.controlEnabled = false;
+            model.player.PlayerVictory();
+            // todo play a victory sound
+            // todo show canvas with victory screen 
         }
     }
 }
